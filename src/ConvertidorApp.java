@@ -30,14 +30,14 @@ public class ConvertidorApp {
 	private Object conversor = new Object();
 	private Object tipoCambio = new Object();
 	private Object segundoTipoCambio = new Object();
+	private int terminar = 0;
 
 	private double valorConvertido;
-	private String textoTipoValor;
 
 	
 	public void convertir() {
 	//Vamos a seguir convirtiendo de algún tipo? 
-		while(true) {
+		while(terminar!=1) {
 			
 			conversor = JOptionPane.showInputDialog(null, 
 					"Selecciona el tipo de conversor a utilizar",
@@ -50,7 +50,8 @@ public class ConvertidorApp {
 			else {
 				
 				String conversorStr = conversor.toString();
-				while(true) {
+				//while(terminar!=1) 
+				{
 					//Si es conversor de monedas
 					if(conversorStr=="MONEDA") {
 						tipoCambio = menuTipoConversor("Conversor 'DE'", "Selecciona la moneda para convertir", monedasObjects);
@@ -61,12 +62,14 @@ public class ConvertidorApp {
 					}
 					if(tipoCambio==null)
 						break;
+					
 					//Mientras el tipo de moneda no sea nulo
 					else {
 						// Se abrevia a string el nombre del tipo de cambio
 						String tipoCambioStr = tipoCambio.toString();	
 						
-						while(true) {
+						//while(terminar!=1)
+						{
 							if(conversorStr=="MONEDA") {
 								segundoTipoCambio = menuTipoConversor("Conversor 'A'", "Selecciona la moneda para convertir", monedasObjects);
 							}
@@ -77,8 +80,10 @@ public class ConvertidorApp {
 							
 							if(segundoTipoCambio==null) 
 								break;
+							
 							else{
-								while(true) {
+								//while(terminar!=1) 
+								{
 									Object cantidadACambiarObject = JOptionPane.showInputDialog(null, 
 											"Selecciona la cantidad que deseas convertir",
 											null, JOptionPane.DEFAULT_OPTION, null, 
@@ -86,6 +91,9 @@ public class ConvertidorApp {
 											null);
 									if(cantidadACambiarObject==null)
 										break;
+									if(!isNumber(cantidadACambiarObject)) {
+										JOptionPane.showMessageDialog(null, "EL ELEMENTO INGRESADO NO ES UN NÚMERO", null, 0, null);	
+									}
 									else{
 										String segundoTipoCambioStr = segundoTipoCambio.toString();
 										Double cantidadACambiarDouble = Double.parseDouble(cantidadACambiarObject.toString());
@@ -113,16 +121,16 @@ public class ConvertidorApp {
 										
 										JOptionPane.showMessageDialog(null, "Son "+ valorConvertido + " de tipo "+
 												segundoTipoCambioStr+" dentro de "+ cantidadACambiarDouble+" "+ tipoCambioStr, null, 0, null);
-										}						
-									}
+										}
+									terminar = JOptionPane.showConfirmDialog(null, "¿DESEAS CONTINUAR?", null, 0, 0);	
 								}
-							segundoTipoCambio=new Object();
 							}
 						}
-					tipoCambio=new Object();//Reseteo de variable
+					}
 				}
 			}
 		}
+		JOptionPane.showConfirmDialog(null, "PROGRAMA FINALIZADO", null, 0, 0);	
 	}
 	
 	Object menuTipoConversor(String titulo, String texto, String[] arregloElementosConversor) {
@@ -130,5 +138,14 @@ public class ConvertidorApp {
 				JOptionPane.PLAIN_MESSAGE, null, 
 				arregloElementosConversor,
 				arregloElementosConversor[0]);
+	}
+	boolean isNumber(Object ob) {
+		try {
+			Double.parseDouble(ob.toString());
+			return true;
+		}
+		catch(NumberFormatException nfe){
+			return false;
+		}
 	}
 }
