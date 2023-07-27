@@ -120,9 +120,9 @@ public class ConvertidorApp {
 											}
 										
 										JOptionPane.showMessageDialog(null, "Son "+ valorConvertido + " de tipo "+
-												segundoTipoCambioStr+" dentro de "+ cantidadACambiarDouble+" "+ tipoCambioStr, null, 0, null);
+												segundoTipoCambioStr+" dentro de "+ cantidadACambiarDouble+" "+ tipoCambioStr, null, JOptionPane.WARNING_MESSAGE, null);
 										}
-									terminar = JOptionPane.showConfirmDialog(null, "¿DESEAS CONTINUAR?", null, 0, 0);	
+									terminar = JOptionPane.showConfirmDialog(null, "¿DESEAS CONTINUAR?", null,0 , JOptionPane.QUESTION_MESSAGE);	
 								}
 							}
 						}
@@ -130,7 +130,7 @@ public class ConvertidorApp {
 				}
 			}
 		}
-		JOptionPane.showConfirmDialog(null, "PROGRAMA FINALIZADO", null, 0, 0);	
+		JOptionPane.showMessageDialog(null, "PROGRAMA FINALIZADO", null, JOptionPane.INFORMATION_MESSAGE, null);	
 	}
 	
 	Object menuTipoConversor(String titulo, String texto, String[] arregloElementosConversor) {
